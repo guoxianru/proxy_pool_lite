@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: GXR
-# @CreateTime: 2021-04-22
+# @CreateTime: 2021-04-01
+# @UpdateTime: 2021-08-10
 
 import re
 import threading
@@ -33,7 +34,7 @@ def freeproxy_89():
     """
     try:
         response = requests.get(
-            "http://api.89ip.cn/tqdl.html?api=1&num=2000&port=&address=&isp=",
+            "http://api.89ip.cn/tqdl.html?api=1&num=3000&port=&address=&isp=",
             headers=config.HEADERS,
             timeout=20,
         )

@@ -1,0 +1,13 @@
+version: '2'
+services:
+  proxy_pool_lite:
+    build: .
+    ports:
+      - "5555:5555"
+    restart: always
+    network_mode: "host"
+    environment:
+      db_type: SSDB
+      ssdb_host: host.docker.internal
+      ssdb_port: 6379
+      ssdb_password: 123456
