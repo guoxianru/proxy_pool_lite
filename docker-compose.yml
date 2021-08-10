@@ -1,6 +1,7 @@
 version: '2'
 services:
   proxy_pool_lite:
+    container_name: proxy_pool_lite
     build: .
     ports:
       - "5555:5555"
