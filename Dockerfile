@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.6
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ Asia/Shanghai
 ADD . /srv/proxy_pool_lite

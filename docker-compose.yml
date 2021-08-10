@@ -1,14 +1,18 @@
 version: '2'
 services:
   proxy_pool_lite:
-    container_name: proxy_pool_lite
     build: .
+    container_name: proxy_pool_lite
+    restart: always
     ports:
       - "5555:5555"
+    depends_on:
+      - redis
+    links:
+      - redis
+  redis:
+    image: "redis"
+    container_name: redis
     restart: always
-    network_mode: "host"
-    environment:
-      db_type: SSDB
-      ssdb_host: host.docker.internal
-      ssdb_port: 6379
-      ssdb_password: 123456
+    ports:
+      - "6379:6379"
