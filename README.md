@@ -1,11 +1,11 @@
 # 爬虫代理池Lite
 
-> 测试网址(单机勿压)：http://43.133.195.71:31605/
+> 测试网址(单机勿压)：http://192.144.233.135:31605/
 
 ## 一、下载安装
 
 ```shell
-git clone https://github.com/guoxianru/proxy_pool_lite
+git clone https://gitee.com/guoxianru/proxy_pool_lite.git
 ```
 
 ## 二、项目配置
