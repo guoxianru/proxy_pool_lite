@@ -1,7 +1,5 @@
 # proxy_pool_lite
 
-> 测试网址(单机勿压)：http://192.144.233.135:31605/
-
 ## 一、下载安装
 
 ```shell
@@ -28,11 +26,3 @@ nohup python proxy_pool_lite/proxy_engine.py >> proxy_pool_lite/proxy_pool_lite_
 ```shell
 docker-compose -f docker-compose.yml up -d --build
 ```
-
-- 查看方法
-
-IP:PORT
-
-## 四、扩展代理
-
-proxy_get.py 为获取新代理文件，新建函数将代理按指定格式添加到Redis中即可

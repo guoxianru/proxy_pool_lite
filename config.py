@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 # @Author: GXR
-# @CreateTime: 2021-04-01
-# @UpdateTime: 2021-12-10
+# @CreateTime: 2022-01-20
+# @UpdateTime: 2022-01-20
 
-# 代理池Redis设置
+# Redis设置
 REDIS_HOST = "redis"
 REDIS_PORT = "6379"
 REDIS_DB = "0"
+REDIS_PASSWORD = "123456"
+
+# 代理池API设置
+API_HOST = "0.0.0.0"
+API_PORT = "11014"
 
 # 代理池Redis-key
 REDIS_KEY_PROXY_FREE = "proxy_free"
@@ -26,10 +31,6 @@ TIME_CHECK = 2
 
 # 刷新可用代理时间周期
 TIME_REFRESH = 3
-
-# 代理池API设置
-API_HOST = "0.0.0.0"
-API_PORT = "31605"
 
 # 测试代理网站
 PROXY_CHECK_URL = "https://www.baidu.com/"
