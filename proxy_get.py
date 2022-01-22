@@ -9,10 +9,10 @@ import time
 
 import redis
 import requests
-from loguru import logger
 from lxml import etree
 
 import config
+from proxy_api import app
 
 """
     代理格式：127.0.0.1:8888
@@ -44,9 +44,9 @@ def freeproxy_89():
                 proxy = ".".join(ip[:-1]) + ":" + str(ip[-1])
                 p.sadd(config.REDIS_KEY_PROXY_FREE, proxy)
             p.execute()
-        logger.debug("获取代理[%s]" % len(data))
+        app.logger.info("[获取代理成功]-[89代理]-[%s]" % len(data))
     except:
-        logger.error("获取代理异常")
+        app.logger.error("[获取代理异常]-[89代理]")
 
 
 def freeproxy_xiaoshu():
@@ -73,9 +73,9 @@ def freeproxy_xiaoshu():
                     proxy = ".".join(ip[:-1]) + ":" + str(ip[-1])
                     p.sadd(config.REDIS_KEY_PROXY_FREE, proxy)
             p.execute()
-            logger.debug("获取代理[%s]" % len(data))
+            app.logger.info("[获取代理成功]-[小舒代理]-[%s]" % len(data))
     except:
-        logger.error("获取代理异常")
+        app.logger.error("[获取代理异常]-[小舒代理]")
 
 
 def freeproxy_yun():
@@ -104,9 +104,9 @@ def freeproxy_yun():
                         proxy = ".".join(ip[:-1]) + ":" + str(ip[-1])
                         p.sadd(config.REDIS_KEY_PROXY_FREE, proxy)
                     p.execute()
-                    logger.debug("获取代理[%s]" % len(data))
+                    app.logger.info("[获取代理成功]-[云代理]-[%s]" % len(data))
     except:
-        logger.error("获取代理异常")
+        app.logger.error("[获取代理异常]-[云代理]")
 
 
 def freeproxy_proxylistplus():
@@ -132,9 +132,9 @@ def freeproxy_proxylistplus():
                     proxy = ".".join(ip[:-1]) + ":" + str(ip[-1])
                     p.sadd(config.REDIS_KEY_PROXY_FREE, proxy)
                 p.execute()
-                logger.debug("获取代理[%s]" % len(data))
+                app.logger.info("[获取代理成功]-[ProxyListplus]-[%s]" % len(data))
     except:
-        logger.error("获取代理异常")
+        app.logger.error("[获取代理异常]-[ProxyListplus]")
 
 
 def run_proxy_get():

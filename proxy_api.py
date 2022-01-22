@@ -4,7 +4,9 @@
 # @UpdateTime: 2022-01-20
 
 import json
+import logging
 import random
+import traceback
 
 import redis
 from flask import Flask
@@ -12,6 +14,9 @@ from flask import Flask
 import config
 
 app = Flask(__name__)
+app.debug = False
+app.logger.setLevel(logging.INFO)
+
 red = redis.Redis(
     host=config.REDIS_HOST,
     port=config.REDIS_PORT,
@@ -23,12 +28,16 @@ red = redis.Redis(
 # 功能列表
 @app.route("/", methods=["GET"], strict_slashes=False)
 def index():
-    return {
-        "/get_one": "获取一个IP",
-        "/get_all": "获取所有IP",
-        "/get_status": "代理池状态",
-        "/user_agent": "获取一个UA",
-    }
+    try:
+        return {
+            "/get_one": "获取一个IP",
+            "/get_all": "获取所有IP",
+            "/get_status": "代理池状态",
+            "/user_agent": "获取一个UA",
+        }
+    except:
+        app.logger.error(traceback.format_exc())
+        return {"respCode": 0, "respMsg": "服务异常", "result": {}}
 
 
 # 随机获取一个可用代理
@@ -36,9 +45,10 @@ def index():
 def get_one():
     try:
         proxy = json.loads(red.srandmember(config.REDIS_KEY_PROXY_USEFUL))
-        return {"code": 0, "proxy": proxy}
+        return {"respCode": 0, "respMsg": "成功", "result": proxy}
     except:
-        return {"code": 1, "msg": "no proxy!"}
+        app.logger.error(traceback.format_exc())
+        return {"respCode": 1, "respMsg": "no proxy!", "result": {}}
 
 
 # 获取所有可用代理
@@ -49,9 +59,10 @@ def get_all():
         proxy_all = red.smembers(config.REDIS_KEY_PROXY_USEFUL)
         for proxy in proxy_all:
             proxy_list.append(json.loads(proxy))
-        return {"code": 0, "proxy": proxy_list}
+        return {"respCode": 0, "respMsg": "成功", "result": proxy_list}
     except:
-        return {"code": 1, "msg": "no proxy!"}
+        app.logger.error(traceback.format_exc())
+        return {"respCode": 1, "respMsg": "no proxy!", "result": {}}
 
 
 # 代理池代理数量统计
@@ -62,9 +73,10 @@ def get_status():
             config.REDIS_KEY_PROXY_FREE: red.scard(config.REDIS_KEY_PROXY_FREE),
             config.REDIS_KEY_PROXY_USEFUL: red.scard(config.REDIS_KEY_PROXY_USEFUL),
         }
-        return {"code": 0, "status": status}
+        return {"respCode": 0, "respMsg": "成功", "result": status}
     except:
-        return {"code": 1, "msg": "no status!"}
+        app.logger.error(traceback.format_exc())
+        return {"respCode": 1, "respMsg": "no status!", "result": {}}
 
 
 # 随机获取一个USER_AGENT
@@ -72,9 +84,10 @@ def get_status():
 def user_agent():
     try:
         user_agent = random.choice(config.USER_AGENT_LIST)
-        return {"code": 0, "user_agent": user_agent}
+        return {"respCode": 0, "respMsg": "成功", "result": user_agent}
     except:
-        return {"code": 1, "msg": "no user_agent!"}
+        app.logger.error(traceback.format_exc())
+        return {"respCode": 1, "respMsg": "no user_agent!", "result": {}}
 
 
 # 启动服务

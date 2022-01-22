@@ -9,9 +9,9 @@ import time
 
 import redis
 import requests
-from loguru import logger
 
 import config
+from proxy_api import app
 
 red = redis.Redis(
     host=config.REDIS_HOST,
@@ -47,7 +47,7 @@ def proxy_refresh():
                         }
                     ),
                 )
-                logger.debug("刷新代理[%s]" % proxy)
+                app.logger.info("[刷新代理]-[%s]" % proxy)
         except:
             pass
 
