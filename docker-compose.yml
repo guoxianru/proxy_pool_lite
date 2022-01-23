@@ -5,7 +5,7 @@ services:
     container_name: proxy_pool_lite
     restart: always
     ports:
-      - "33001:33001"
+      - "11005:11005"
     depends_on:
       - redis
     links:

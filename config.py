@@ -11,7 +11,7 @@ REDIS_PASSWORD = "123456"
 
 # 代理池API设置
 API_HOST = "0.0.0.0"
-API_PORT = "33001"
+API_PORT = "11005"
 
 # 代理池Redis-key
 REDIS_KEY_PROXY_FREE = "proxy_free"
