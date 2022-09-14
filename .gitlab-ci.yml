@@ -1,0 +1,11 @@
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - sh deploy.sh
+  only:
+    - master
+  tags:
+    - aly
