@@ -6,7 +6,6 @@
 import re
 import threading
 import time
-import traceback
 
 import requests
 
@@ -27,7 +26,7 @@ def freeproxy_89():
         response = requests.get(
             "http://api.89ip.cn/tqdl.html?api=1&num=3000&port=&address=&isp=",
             headers=config.HEADERS,
-            timeout=20,
+            timeout=5,
         )
         time.sleep(1)
         data = re.findall("(\d+).(\d+).(\d+).(\d+):(\d+)", response.text, re.S)
@@ -38,7 +37,7 @@ def freeproxy_89():
             p.execute()
         app.logger.info("[获取代理成功]-[89代理]-[%s]" % len(data))
     except:
-        app.logger.error("[获取代理异常]-[89代理]-[%s]" % traceback.format_exc())
+        app.logger.error("[获取代理异常]-[89代理]")
 
 
 def freeproxy_yun():
@@ -53,9 +52,11 @@ def freeproxy_yun():
         ]
         with config.RED.pipeline(transaction=False) as p:
             for url in url_list:
-                for page in range(1, 6):
+                for page in range(1, 11):
                     response = requests.get(
-                        url + str(page), headers=config.HEADERS, timeout=20
+                        url + str(page),
+                        headers=config.HEADERS,
+                        timeout=5,
                     )
                     time.sleep(1)
                     data = re.findall(
@@ -69,7 +70,7 @@ def freeproxy_yun():
                     p.execute()
                     app.logger.info("[获取代理成功]-[云代理]-[%s]" % len(data))
     except:
-        app.logger.error("[获取代理异常]-[云代理]-[%s]" % traceback.format_exc())
+        app.logger.error("[获取代理异常]-[云代理]")
 
 
 def freeproxy_proxylistplus():
@@ -79,11 +80,11 @@ def freeproxy_proxylistplus():
     """
     try:
         with config.RED.pipeline(transaction=False) as p:
-            for page in range(1, 6):
+            for page in range(1, 11):
                 response = requests.get(
                     "https://list.proxylistplus.com/Fresh-HTTP-Proxy-List-" + str(page),
                     headers=config.HEADERS,
-                    timeout=20,
+                    timeout=5,
                 )
                 time.sleep(1)
                 data = re.findall(
@@ -97,7 +98,7 @@ def freeproxy_proxylistplus():
                 p.execute()
                 app.logger.info("[获取代理成功]-[ProxyListplus]-[%s]" % len(data))
     except:
-        app.logger.error("[获取代理异常]-[ProxyListplus]-[%s]" % traceback.format_exc())
+        app.logger.error("[获取代理异常]-[ProxyListplus]")
 
 
 def run_proxy_get():

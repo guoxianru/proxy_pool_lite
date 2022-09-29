@@ -25,7 +25,7 @@ def proxy_refresh():
                 config.PROXY_CHECK_URL,
                 headers=config.HEADERS,
                 proxies=proxies,
-                timeout=5,
+                timeout=3,
             )
             if response.status_code == 200:
                 config.RED.sadd(
