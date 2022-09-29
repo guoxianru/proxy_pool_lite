@@ -1,13 +1,26 @@
 # -*- coding: utf-8 -*-
 # @Author: GXR
 # @CreateTime: 2022-01-20
-# @UpdateTime: 2022-01-20
+# @UpdateTime: 2022-09-29
 
-# Redis设置
-REDIS_HOST = "redis"
-REDIS_PORT = "6379"
-REDIS_DB = "0"
-REDIS_PASSWORD = "123456"
+import redis
+
+
+# 容器Redis(默认开启)
+RED = redis.Redis(
+    host="redis",
+    port=6379,
+    db=0,
+    decode_responses=True,
+)
+# # 本地Redis
+# RED = redis.Redis(
+#     host="127.0.0.1",
+#     port=6379,
+#     password="123456",
+#     db=0,
+#     decode_responses=True,
+# )
 
 # 代理池API设置
 API_HOST = "0.0.0.0"
@@ -45,6 +58,7 @@ HEADERS = {
 # USER_AGENT池
 USER_AGENT_LIST = [
     # Windows：Chrome
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.35 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",
@@ -62,6 +76,7 @@ USER_AGENT_LIST = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.69 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.16 Safari/537.36",
     # Mac：Chrome
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.35 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36",

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Author: GXR
 # @CreateTime: 2022-01-20
-# @UpdateTime: 2022-01-20
+# @UpdateTime: 2022-09-29
 
 import time
 
@@ -28,7 +28,10 @@ scheduler = BlockingScheduler(**scheduler_options)
 
 # 定时获取新代理
 scheduler.add_job(
-    proxy_get.run_proxy_get, "interval", minutes=config.TIME_GET, id="proxy_get",
+    proxy_get.run_proxy_get,
+    "interval",
+    minutes=config.TIME_GET,
+    id="proxy_get",
 )
 
 # 定时检查新代理

@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 # @Author: GXR
 # @CreateTime: 2022-01-20
-# @UpdateTime: 2022-09-15
+# @UpdateTime: 2022-09-29
 
 import json
 import logging
 import random
 import traceback
 
-import redis
 from flask import Flask
 
 import config
@@ -16,13 +15,6 @@ import config
 app = Flask(__name__)
 app.debug = False
 app.logger.setLevel(logging.INFO)
-
-red = redis.Redis(
-    host=config.REDIS_HOST,
-    port=config.REDIS_PORT,
-    db=config.REDIS_DB,
-    decode_responses=True,
-)
 
 
 # 功能列表
@@ -44,7 +36,7 @@ def index():
 @app.route("/get_one", methods=["GET"], strict_slashes=False)
 def get_one():
     try:
-        proxy = json.loads(red.srandmember(config.REDIS_KEY_PROXY_USEFUL))
+        proxy = json.loads(config.RED.srandmember(config.REDIS_KEY_PROXY_USEFUL))
         return {"respCode": 0, "respMsg": "成功", "result": proxy}
     except:
         app.logger.error(traceback.format_exc())
@@ -56,7 +48,7 @@ def get_one():
 def get_all():
     try:
         proxy_list = []
-        proxy_all = red.smembers(config.REDIS_KEY_PROXY_USEFUL)
+        proxy_all = config.RED.smembers(config.REDIS_KEY_PROXY_USEFUL)
         for proxy in proxy_all:
             proxy_list.append(json.loads(proxy))
         return {"respCode": 0, "respMsg": "成功", "result": proxy_list}
@@ -70,8 +62,10 @@ def get_all():
 def get_status():
     try:
         status = {
-            config.REDIS_KEY_PROXY_FREE: red.scard(config.REDIS_KEY_PROXY_FREE),
-            config.REDIS_KEY_PROXY_USEFUL: red.scard(config.REDIS_KEY_PROXY_USEFUL),
+            config.REDIS_KEY_PROXY_FREE: config.RED.scard(config.REDIS_KEY_PROXY_FREE),
+            config.REDIS_KEY_PROXY_USEFUL: config.RED.scard(
+                config.REDIS_KEY_PROXY_USEFUL
+            ),
         }
         return {"respCode": 0, "respMsg": "成功", "result": status}
     except:

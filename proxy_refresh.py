@@ -1,30 +1,22 @@
 # -*- coding: utf-8 -*-
 # @Author: GXR
 # @CreateTime: 2022-01-20
-# @UpdateTime: 2022-01-20
+# @UpdateTime: 2022-09-29
 
 import json
 import threading
 import time
 
-import redis
 import requests
 
 import config
 from proxy_api import app
 
-red = redis.Redis(
-    host=config.REDIS_HOST,
-    port=config.REDIS_PORT,
-    db=config.REDIS_DB,
-    decode_responses=True,
-)
-
 
 # 刷新可用代理
 def proxy_refresh():
     while 1:
-        proxy = red.spop(config.REDIS_KEY_PROXY_USEFUL)
+        proxy = config.RED.spop(config.REDIS_KEY_PROXY_USEFUL)
         if not proxy:
             break
         proxies = {"http": "http://" + proxy, "https": "http://" + proxy}
@@ -36,7 +28,7 @@ def proxy_refresh():
                 timeout=5,
             )
             if response.status_code == 200:
-                red.sadd(
+                config.RED.sadd(
                     config.REDIS_KEY_PROXY_USEFUL,
                     json.dumps(
                         {
